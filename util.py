@@ -1,6 +1,7 @@
 from collections import defaultdict, deque
 
-def topological_sort(elements, dependencies):
+
+def topological_sort(elements, dependencies, error):
     graph = defaultdict(list)
     in_degree = {element: 0 for element in elements}
     for element, deps in dependencies.items():
@@ -17,5 +18,5 @@ def topological_sort(elements, dependencies):
             if in_degree[neighbor] == 0:
                 queue.append(neighbor)
     if len(sorted_list) != len(elements):
-        raise ValueError(f"Cycle detected in the dependencies: {elements} -> {dependencies}")
+        raise error(f"Cycle detected in the dependencies: {elements} -> {dependencies}")
     return sorted_list
