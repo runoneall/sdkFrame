@@ -29,4 +29,10 @@ sdkInstalledModules: list[object] = [
 ]
 
 for module in sdkInstalledModules:
-    print(module.__package__)
+    modulePackage: str = module.__package__
+    moduleInfo: dict = module.moduleInfo
+    if "Main" not in dir(module):
+        raise errors.InvalidModuleError(f"Module {modulePackage} has no Main class")
+    moduleMain: object = module.Main(sdk)
+    setattr(moduleMain, "moduleInfo", moduleInfo)
+    setattr(sdk, moduleInfo["name"], moduleMain)
