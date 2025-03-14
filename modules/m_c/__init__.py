@@ -3,7 +3,7 @@ moduleInfo = {
     "version": "1.0.0",
     "description": "This is a module c",
     "author": "r1a",
-    "dependencies": [],
+    "dependencies": ["m_b"],
 }
 
 from .m_c import ModuleC as Main
