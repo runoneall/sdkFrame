@@ -1,4 +1,9 @@
 from collections import defaultdict, deque
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
+import sys
+
+executor = ThreadPoolExecutor()
 
 
 def topological_sort(elements, dependencies, error):
@@ -20,3 +25,8 @@ def topological_sort(elements, dependencies, error):
     if len(sorted_list) != len(elements):
         raise error(f"Cycle detected in the dependencies: {elements} -> {dependencies}")
     return sorted_list
+
+
+def ExecAsync(async_func, *args, **kwargs):
+    loop = asyncio.get_event_loop()
+    loop.run_in_executor(executor, lambda: asyncio.run(async_func(*args, **kwargs)))
